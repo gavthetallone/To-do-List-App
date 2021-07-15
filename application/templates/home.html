@@ -13,6 +13,14 @@
         <a href="{{ url_for('update', id=task.id) }}">Update</a>
         <a href="{{ url_for('delete', id=task.id) }}">Delete</a>
         <br>
+
+        {% if task.completed %}
+            <a href="{{ url_for('incomplete', id=task.id) }}">Mark as Incomplete</a>
+        {% else %}
+            <a href="{{ url_for('complete', id=task.id) }}">Mark as Complete</a>
+        {% endif %}
+         
+        <br>
         <br>
     {% endfor %}
 

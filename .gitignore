@@ -1,5 +1,6 @@
 __init__.py
 data.db
+test.db
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
