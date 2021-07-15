@@ -1,0 +1,15 @@
+
+{% extends 'layout.html' %}
+
+{% block title %}
+    Create/Update
+{% endblock title %}
+
+{% block body %}
+<form action="" method="POST">
+    {{ form.hidden_tag() }}
+    {{ form.description.label }} {{ form.description }}
+    <br>
+    {{ form.submit }}
+</form>
+{% endblock body %}

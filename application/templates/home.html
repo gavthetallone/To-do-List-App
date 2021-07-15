@@ -1,0 +1,19 @@
+
+{% extends 'layout.html' %}
+
+{% block title %}
+    Home
+{% endblock title %}
+
+{% block body %}
+
+    {% for task in tasks %}
+        {{ task.id }} - {{ task.description }} - {{ "✔️" if task.completed else "❌" }}
+        <br>
+        <a href="{{ url_for('update', id=task.id) }}">Update</a>
+        <a href="{{ url_for('delete', id=task.id) }}">Delete</a>
+        <br>
+        <br>
+    {% endfor %}
+
+{% endblock body %}

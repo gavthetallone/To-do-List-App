@@ -1,0 +1,19 @@
+
+<body>
+    <h1>My To-do List App</h1>
+    
+    <h2>
+    {% block title %}
+    {% endblock title %}
+    </h2>
+
+    <div class="navbar">
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('create') }}">Create New</a>
+    </div>
+
+    <br>
+    
+    {% block body %}
+    {% endblock body %}
+</body>
