@@ -1,6 +1,6 @@
 from . import app, db
-from .models import Task
-from .forms import TaskForm
+from .models import Label, Task
+from .forms import TaskForm, LabelForm
 from flask import redirect, url_for, request, render_template
 
 @app.route("/")
@@ -14,13 +14,32 @@ def create():
     form = TaskForm()
 
     if request.method == "POST":
-        new_task = Task(description=form.description.data)
+        new_task = Task(
+            description=form.description.data,
+            label_id=form.label.data
+            )
         db.session.add(new_task)
         db.session.commit()
 
         return redirect(url_for("home"))
     else:
-        return render_template("create.html", form=form)
+        labels = Label.query.all()
+        form.label.choices = [(label.id, label.name) for label in labels]
+
+        return render_template("create_task.html", form=form)
+
+@app.route("/create_label", methods=["GET", "POST"])
+def create_label():
+    form = LabelForm()
+
+    if request.method == "POST":
+        new_label = Label(name=form.name.data)
+        db.session.add(new_label)
+        db.session.commit()
+
+        return redirect(url_for("home"))
+    else:
+        return render_template("create_label.html", form=form)
 
 @app.route("/update/<int:id>/", methods=["GET", "POST"])
 def update(id):
@@ -29,12 +48,18 @@ def update(id):
 
     if request.method == "POST":
         task.description = form.description.data
+        task.label_id = form.label.data
         db.session.add(task)
         db.session.commit()
 
         return redirect(url_for("home"))
     else:
-        return render_template("create.html", form=form)
+        labels = Label.query.all()
+        form.label.choices = [(label.id, label.name) for label in labels]
+
+        form.description.data = task.description
+
+        return render_template("create_task.html", form=form)
 
 @app.route("/delete/<int:id>")
 def delete(id):

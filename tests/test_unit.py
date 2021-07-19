@@ -1,7 +1,7 @@
 from flask import url_for
 from flask_testing import TestCase
 from application import app, db
-from application.models import Task
+from application.models import Label, Task
 
 class TestBase(TestCase):
     def create_app(self):
@@ -52,6 +52,15 @@ class TestCreate(TestBase):
             )
         
         assert "Check create is working" in response.data.decode()
+
+    def test_create_label(self):
+        response = self.client.post(
+            url_for("create_label"),
+            data={"name" : "Example label"},
+            follow_redirects=True
+            )
+        
+        assert Label.query.filter_by(name="Example label").first() != None
 
 class TestUpdate(TestBase):
     def test_update(self):

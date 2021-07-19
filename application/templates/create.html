@@ -8,7 +8,10 @@
 {% block body %}
 <form action="" method="POST">
     {{ form.hidden_tag() }}
-    {{ form.description.label }} {{ form.description }}
+    {% block form_contents %}}
+    
+
+    {% endblock form_contents%}
     <br>
     {{ form.submit }}
 </form>
